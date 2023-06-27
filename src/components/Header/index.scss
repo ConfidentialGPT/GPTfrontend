@@ -1,0 +1,10 @@
+.ant-layout-header.admin-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 16px;
+  box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.05);
+  .anticon {
+    margin-right: 5px;
+  }
+}

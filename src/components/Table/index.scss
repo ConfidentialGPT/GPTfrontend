@@ -1,0 +1,37 @@
+.table-page {
+  height: 100%;
+  padding: 16px;
+  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+  &.no-padding {
+    padding: 0;
+  }
+  .table-header {
+    .ant-form-item {
+      margin-bottom: 16px;
+    }
+  }
+  .ant-table-wrapper {
+    flex: 1;
+    height: 0;
+    .ant-spin-nested-loading {
+      height: 100%;
+      .ant-spin-container {
+        height: 100%;
+        .ant-table {
+          height: calc(100% - 48px);
+          .ant-table-container {
+            height: 100%;
+            .ant-table-body {
+              max-height: calc(100% - 55px) !important;
+            }
+          }
+        }
+        .ant-pagination {
+          margin-bottom: 0;
+        }
+      }
+    }
+  }
+}

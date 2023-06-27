@@ -1,0 +1,41 @@
+:root {
+  --primary-color: #1977fa;
+  --menu-background-color: #262835;
+  --menu-background-color-second: #2b303e;
+  --menu-text-color: rgba(255, 255, 255, 0.8);
+  --container-background-color: #f0f2f5;
+  --content-background-color: #ffffff;
+  --link-color: #1977fa;
+  --main-text-color: #000000;
+  --light-text-color: #ffffff;
+  --normal-text-color: #bcbcbc;
+  --secondary-text-color: #373737;
+  --assist-text-color: #666666;
+  --tips-text-color: #999999;
+  --warning-color: #ee3333;
+  --success-color: rgb(90, 178, 55);
+  --table-header-color: rgba(0, 0, 0, 0.85);
+  --table-body-color: rgba(0, 0, 0, 0.65);
+  --text-background-color: #f7f9fc;
+  --disable-background-color: #f5f5f5;
+  --disable-text-color: rgba(0, 0, 0, 0.25);
+  --split-line-color: #dddddd;
+  --title-font-size: 18px;
+  --text-font-size: 14px;
+  --tips-font-size: 12px;
+  --container-border-radius: 4px;
+  --box-shadow: 0 10px 15px 0 rgba(0, 0, 0, 0.03);
+  --btn-space: 10px;
+  --content-font-family: Helvetica;
+  --light-border: 1px solid #eff1f5;
+  --dark-border: 1px solid #979797;
+  --gray-border: 1px solid #cccccc;
+  /*项目相关配置样式*/
+  --component-logo-color: #0eb2ff;
+  --component-background: rgba(14, 178, 255, 0.08);
+  --security-item-border-img: linear-gradient(180deg, rgba(94, 204, 255, 1), rgba(14, 178, 255, 1)) 2 2;
+  --vm-color: rgba(46, 188, 255, 0.85);
+  --outer-space: 20px;
+  --inner-space: 20px;
+  --bar-padding: 16px 20px;
+}

@@ -1,0 +1,94 @@
+.login-page {
+  width: 100vw;
+  height: 100vh;
+  min-width: 1280px;
+  // background: linear-gradient(153deg, #0f56ed 0%, #0445e9 100%);
+  position: relative;
+  padding-top: 5rem;
+  background: linear-gradient(limegreen, transparent), linear-gradient(90deg, skyblue, transparent),
+    linear-gradient(-90deg, coral, transparent);
+
+  background-blend-mode: screen;
+  @media only screen and (max-width: 1200px) {
+    height: 768px;
+  }
+  .bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 100vw;
+    z-index: 0;
+    background-repeat: no-repeat;
+    background-size: auto 100%;
+    background-position: 0 center;
+    opacity: 0.5;
+  }
+  .logo {
+    position: relative;
+    z-index: 1;
+    width: 10.38rem;
+    height: 4.88rem;
+    margin-top: 2.88rem;
+    margin-left: 5.06rem;
+  }
+  .login-container {
+    z-index: 1;
+    position: relative;
+    padding: 0 13.6rem;
+    .login-info {
+      text-align: center;
+      flex: 1;
+      text-shadow: 0px 0px 0px #1b5ed0;
+      color: #fff;
+      .title {
+        height: 3rem;
+        font-size: 3rem;
+        font-family: PingFangSC-Semibold, PingFang SC;
+        font-weight: 600;
+        line-height: 3rem;
+      }
+      .sub-title {
+        height: 1.06rem;
+        font-size: 1.88rem;
+        line-height: 1.06rem;
+      }
+    }
+    .login-box {
+      width: 22rem;
+      background: #ffffff;
+      box-shadow: 0rem 0.06rem 1rem 0.25rem #ccc;
+      border-radius: 0.75rem;
+      padding: 4rem 2rem;
+      margin: 0 auto;
+      .ant-form-item {
+        // margin-bottom: 0;
+      }
+      .login-title {
+        height: 1.88rem;
+        font-size: 1.88rem;
+        font-family: PingFangSC-Semibold, PingFang SC;
+        font-weight: 600;
+        color: #333333;
+        line-height: 1.88rem;
+        text-align: center;
+        margin-bottom: 4rem;
+      }
+    }
+  }
+  .footer {
+    position: absolute;
+    width: 100%;
+    height: 1.5rem;
+    line-height: 1.5rem;
+    bottom: 1rem;
+    left: 0;
+    z-index: 1;
+    color: #fff;
+    font-size: 1.13rem;
+    text-align: center;
+    a {
+      color: #fff;
+    }
+  }
+}

@@ -1,0 +1,40 @@
+$primary-color: var(--primary-color); //与config-overrides.js中antd的配置相同
+$menu-background-color: var(--menu-background-color); //左侧menu背景色
+$menu-background-color-second: var(--menu-background-color-second); //menu二级展开背景色
+$menu-text-color: var(--menu-text-color); //menu文字颜色
+$container-background-color: var(--container-background-color); //容器背景色
+$content-background-color: var(--content-background-color); //内容背景色
+$link-color: var(--link-color); //链接
+$main-text-color: var(--main-text-color); //主要文字
+$light-text-color: var(--light-text-color); //白色文字
+$normal-text-color: var(--normal-text-color); //menu非高亮文字
+$secondary-text-color: var(--secondary-text-color); //次要文字
+$assist-text-color: var(--assist-text-color); //辅助文字
+$tips-text-color: var(--tips-text-color); //提示文字
+$warning-color: var(--warning-color); //错误颜色
+$success-color: var(--success-color); //成功颜色
+$table-header-color: var(--table-header-color); //表格头部 antd默认色
+$table-body-color: var(--table-body-color); //表格body antd默认色
+$text-background-color: var(--text-background-color); //文字背景颜色
+$disable-background-color: var(--disable-background-color); //禁用背景色
+$disable-text-color: var(--disable-text-color); //禁用字体色
+$split-line-color: var(--split-line-color); //间隔线颜色
+$title-font-size: var(--title-font-size); //如首页card 上的标题
+$text-font-size: var(--text-font-size); //普通文字大小
+$tips-font-size: var(--tips-font-size); //提示文字大小
+$container-border-radius: var(--container-border-radius); //容器圆角
+$box-shadow: var(--box-shadow); //阴影
+$btn-space: var(--btn-space); //按钮之间的间隔
+$content-font-family: var(--content-font-family); //内容字体
+$light-border: var(--light-border); //亮色边框
+$dark-border: var(--dark-border); //深色边框
+$gray-border: var(--gray-border); //灰色边框
+$component-logo-color: var(--component-logo-color); //组件logo颜色
+$component-background: var(--component-background); //组件logo颜色
+$security-item-border-img: var(--security-item-border-img); //组件logo颜色
+$modal-head-color: var(--modal-head-color); // modal框头部底部背景颜色
+$modal-head-title: var(--modal-head-title); // modal框头部title字体颜色
+$vm-color: var(--vm-color); // 服务编排组件，虚拟机和分组字体颜色
+$outer-space: var(--outer-space); // container外部距离
+$inner-space: var(--inner-space); // container内部距离
+$bar-padding: var(--bar-padding); // 搜索框、查询条件padding

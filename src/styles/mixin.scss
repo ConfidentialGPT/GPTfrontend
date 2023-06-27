@@ -1,0 +1,32 @@
+@import 'styles/var.scss';
+
+@mixin ellipse {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+@mixin center-block {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+@mixin split-line {
+  content: '';
+  border-right: var(--dark-border);
+  height: 18px;
+  margin-left: 15px;
+}
+
+@mixin content-container {
+  box-shadow: $box-shadow;
+  border-radius: $container-border-radius;
+  background-color: $content-background-color;
+}
+
+@mixin background-container {
+  padding: $outer-space;
+  background: $container-background-color;
+}
