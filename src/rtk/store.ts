@@ -9,8 +9,6 @@ const store = configureStore({
   }
 })
 
-export const isAdmin = () => store.getState().user.user?.role === 0
-
 export default store
 
 export type AppDispatch = typeof store.dispatch

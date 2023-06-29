@@ -1,14 +1,13 @@
 import { Outlet } from 'react-router-dom'
 import { Layout } from 'antd'
 import Menu from 'components/Menu'
-import { AdminPathName, getRoutes, RouteDataProps } from '../routes'
-import Header from 'components/Header'
+import { RootPath, getRoutes, RouteDataProps } from '../routes'
 import './index.scss'
 
 const { Sider, Content } = Layout
 
 export const getAdminRoute = (user: any) => {
-  return getRoutes(user).find((route: RouteDataProps) => route.path === AdminPathName)
+  return getRoutes(user).find((route: RouteDataProps) => route.path === RootPath)
 }
 
 const Admin = () => {
@@ -21,7 +20,6 @@ const Admin = () => {
         </Content>
       </Sider>
       <Layout>
-        <Header />
         <Content className="admin-content">
           <Outlet />
         </Content>

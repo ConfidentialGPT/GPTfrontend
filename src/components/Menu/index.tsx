@@ -4,7 +4,7 @@ import { RouteDataProps } from 'pages/routes'
 import { MenuInfo, SubMenuType } from 'rc-menu/lib/interface'
 import { useLocation, useNavigate, matchRoutes } from 'react-router-dom'
 import { resolvePaths } from './helper'
-import { getAdminRoute } from 'pages/Admin'
+import { getAdminRoute } from 'pages/Root'
 import store from 'rtk/store'
 
 type TitleClickFnType = Required<SubMenuType>['onTitleClick']
@@ -20,7 +20,7 @@ const SiderMenu: React.FC = () => {
   const navigate = useNavigate()
 
   const getRoute = useCallback(() => {
-    const user = store.getState().user.user
+    const user = store.getState().user
     setRoute(getAdminRoute(user))
   }, [])
 

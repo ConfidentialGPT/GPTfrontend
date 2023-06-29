@@ -1,10 +1,9 @@
-import { Navigate, RouteObject } from 'react-router-dom'
-import Admin from './Admin'
-import Home from './Admin/Home'
+import { RouteObject } from 'react-router-dom'
+import Root from './Root'
+import Home from './Root/Home'
 import Login from './Login'
-import {
-  HomeOutlined,
-} from '@ant-design/icons'
+import { HomeOutlined } from '@ant-design/icons'
+import { UserState } from 'rtk/features/user/userSlice'
 
 export interface RouteDataProps extends RouteObject {
   icon?: React.ReactNode
@@ -14,12 +13,12 @@ export interface RouteDataProps extends RouteObject {
   permission?: number
 }
 
-export const AdminPathName = '/admin'
+export const RootPath = '/'
 
 const routes: RouteDataProps[] = [
   {
-    path: AdminPathName,
-    element: <Admin />, //一级路由，不作为菜单项
+    path: RootPath,
+    element: <Root />, //一级路由，不作为菜单项
     children: [
       {
         element: <Home />, //二级路由，作为菜单项
@@ -33,16 +32,15 @@ const routes: RouteDataProps[] = [
     path: 'login',
     element: <Login />,
     hideInMenu: true
-  },
-  {
-    path: '/',
-    element: <Navigate to={AdminPathName} />
   }
 ]
 
-const filterRoutes = (routes: RouteDataProps[], userRole: number) => {
+const filterRoutes = (routes: RouteDataProps[], userRole?: number) => {
   return routes.filter((route) => {
-    if (route.permission === undefined || route.permission >= userRole) {
+    if (
+      route.permission === undefined ||
+      (userRole !== undefined && route.permission >= userRole)
+    ) {
       if (route.children) {
         route.children = filterRoutes(route.children, userRole)
       }
@@ -53,7 +51,7 @@ const filterRoutes = (routes: RouteDataProps[], userRole: number) => {
   })
 }
 
-export const getRoutes = (user: any) => {
+export const getRoutes = (user?: UserState) => {
   if (user) {
     return filterRoutes(routes, user.role)
   }
