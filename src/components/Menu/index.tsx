@@ -4,7 +4,7 @@ import { RouteDataProps } from 'pages/routes'
 import { MenuInfo, SubMenuType } from 'rc-menu/lib/interface'
 import { useLocation, useNavigate, matchRoutes } from 'react-router-dom'
 import { resolvePaths } from './helper'
-import { getAdminRoute } from 'pages/Admin'
+import { getRootRoute } from 'pages/Chat'
 import store from 'rtk/store'
 
 type TitleClickFnType = Required<SubMenuType>['onTitleClick']
@@ -21,7 +21,7 @@ const SiderMenu: React.FC = () => {
 
   const getRoute = useCallback(() => {
     const user = store.getState().user.user
-    setRoute(getAdminRoute(user))
+    setRoute(getRootRoute(user))
   }, [])
 
   useEffect(() => {
@@ -103,7 +103,7 @@ const SiderMenu: React.FC = () => {
 
   return (
     <Menu
-      theme="dark"
+      theme="light"
       openKeys={openKeys}
       selectedKeys={selectedKeys}
       mode="inline"

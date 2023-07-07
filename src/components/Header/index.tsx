@@ -1,6 +1,6 @@
 import { Layout, Breadcrumb, Button } from 'antd'
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
-import { getAdminRoute } from 'pages/Admin'
+import { getRootRoute } from 'pages/Chat'
 import { matchRoutes, useLocation } from 'react-router-dom'
 import { RouteDataProps } from 'pages/routes'
 import userApi from 'api/user'
@@ -14,7 +14,7 @@ const HeaderBreadcrumb: React.FC = () => {
 
   const getRoute = useCallback(() => {
     const user = store.getState().user.user
-    setRoute(getAdminRoute(user))
+    setRoute(getRootRoute(user))
   }, [])
 
   useEffect(() => {

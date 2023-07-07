@@ -30,6 +30,10 @@
   --light-border: 1px solid #eff1f5;
   --dark-border: 1px solid #979797;
   --gray-border: 1px solid #cccccc;
+
+  --bg-gray: #e6e7e9;
+  --bg-gray-light: #f7f7f7;
+
   /*项目相关配置样式*/
   --component-logo-color: #0eb2ff;
   --component-background: rgba(14, 178, 255, 0.08);

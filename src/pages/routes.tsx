@@ -1,10 +1,8 @@
-import { Navigate, RouteObject } from 'react-router-dom'
-import Admin from './Admin'
-import Home from './Admin/Home'
+import { RouteObject } from 'react-router-dom'
+import Chat from './Chat'
+import CasualChat from './Chat/Casual'
 import Login from './Login'
-import {
-  HomeOutlined,
-} from '@ant-design/icons'
+import { RobotOutlined } from '@ant-design/icons'
 
 export interface RouteDataProps extends RouteObject {
   icon?: React.ReactNode
@@ -14,18 +12,18 @@ export interface RouteDataProps extends RouteObject {
   permission?: number
 }
 
-export const AdminPathName = '/admin'
+export const RootPathName = '/'
 
 const routes: RouteDataProps[] = [
   {
-    path: AdminPathName,
-    element: <Admin />, //一级路由，不作为菜单项
+    path: RootPathName,
+    element: <Chat />, //一级路由，不作为菜单项
     children: [
       {
-        element: <Home />, //二级路由，作为菜单项
+        element: <CasualChat />, //二级路由，作为菜单项
         index: true,
-        name: '首页',
-        icon: <HomeOutlined rev={undefined} />
+        name: 'Casual Chat',
+        icon: <RobotOutlined rev={undefined} />
       }
     ]
   },
@@ -33,10 +31,6 @@ const routes: RouteDataProps[] = [
     path: 'login',
     element: <Login />,
     hideInMenu: true
-  },
-  {
-    path: '/',
-    element: <Navigate to={AdminPathName} />
   }
 ]
 

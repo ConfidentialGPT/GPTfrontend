@@ -1,0 +1,26 @@
+@import '~@/styles/var.scss';
+
+.chat-layout {
+  height: 100%;
+  width: 100%;
+  .chat-sidebar {
+    // box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.05);
+    // background-color: #001529;
+    border-right: 1px solid $bg-gray;
+    .chat-sidebar-logo {
+      color: #230c80;
+      background-color: $bg-gray-light;
+      font-size: 20px;
+      font-weight: bold;
+      padding: 0;
+      text-align: center;
+      height: 50px;
+      line-height: 50px;
+    }
+  }
+
+  .chat-content {
+    // padding: 16px;
+    background-color: white;
+  }
+}

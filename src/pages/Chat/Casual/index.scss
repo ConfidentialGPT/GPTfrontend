@@ -1,0 +1,25 @@
+@import '~@/styles/var.scss';
+.chat-page {
+  height: 100%;
+  .chat-header {
+    height: 50px;
+    line-height: 50px;
+    background-color: $bg-gray-light;
+    text-align: center;
+    font-weight: bold;
+  }
+
+  .chat-content {
+    background-color: white;
+    overflow-y: auto;
+    .chat-scroll-zone {
+      min-height: 100%;
+      margin: 0 auto;
+      max-width: 700px;
+    }
+  }
+
+  .chat-input {
+    background-color: white;
+  }
+}
