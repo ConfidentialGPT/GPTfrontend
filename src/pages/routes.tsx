@@ -34,9 +34,12 @@ const routes: RouteDataProps[] = [
   }
 ]
 
-const filterRoutes = (routes: RouteDataProps[], userRole: number) => {
+const filterRoutes = (routes: RouteDataProps[], userRole?: number) => {
   return routes.filter((route) => {
-    if (route.permission === undefined || route.permission >= userRole) {
+    if (
+      route.permission === undefined ||
+      (userRole !== undefined && route.permission >= userRole)
+    ) {
       if (route.children) {
         route.children = filterRoutes(route.children, userRole)
       }
@@ -47,7 +50,7 @@ const filterRoutes = (routes: RouteDataProps[], userRole: number) => {
   })
 }
 
-export const getRoutes = (user: any) => {
+export const getRoutes = (user?: UserState) => {
   if (user) {
     return filterRoutes(routes, user.role)
   }

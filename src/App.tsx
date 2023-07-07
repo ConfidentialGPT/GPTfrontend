@@ -2,10 +2,7 @@ import { Outlet } from 'react-router-dom'
 import { Routes, Route, IndexRouteProps, useLocation } from 'react-router-dom'
 import { getRoutes, RouteDataProps } from 'pages/routes'
 import { Suspense, useEffect, useState } from 'react'
-import store from 'rtk/store'
 import NProgress from 'nprogress'
-import { getUserInfo } from 'api/user'
-import { setUserInfo } from 'rtk/features/user/userSlice'
 
 import 'nprogress/nprogress.css'
 import './App.scss'
@@ -51,14 +48,15 @@ function App() {
   const [routes, setRoutes] = useState<RouteDataProps[]>([])
 
   useEffect(() => {
-    getUserInfo().then((user) => {
-      setRoutes(getRoutes(user))
-      store.dispatch(setUserInfo(user))
-    })
-    return store.subscribe(() => {
-      const user = store.getState().user.user
-      setRoutes(getRoutes(user))
-    })
+    // getUserInfo().then((user) => {
+    //   setRoutes(getRoutes(user))
+    //   store.dispatch(setUserInfo(user))
+    // })
+    setRoutes(getRoutes())
+    // return store.subscribe(() => {
+    //   const user = store.getState().user.user
+    //   setRoutes(getRoutes(user))
+    // })
   }, [])
 
   return (

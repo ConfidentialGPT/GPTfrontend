@@ -1,19 +1,18 @@
 import { createSlice } from '@reduxjs/toolkit'
 
 export interface UserState {
-  user: any
+  id?: number
+  role?: number
 }
 
-const initialState: UserState = {
-  user: null
-}
+const initialState: UserState = {}
 
 const userSlice = createSlice({
   name: 'user',
   initialState,
   reducers: {
     setUserInfo: (state, { payload }) => {
-      state.user = payload
+      state = payload
     }
   }
 })
