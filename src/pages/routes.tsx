@@ -3,6 +3,7 @@ import Chat from './Chat'
 import CasualChat from './Chat/Casual'
 import Login from './Login'
 import { RobotOutlined } from '@ant-design/icons'
+import { UserState } from 'rtk/features/user/userSlice'
 
 export interface RouteDataProps extends RouteObject {
   icon?: React.ReactNode

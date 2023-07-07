@@ -13,7 +13,7 @@ const HeaderBreadcrumb: React.FC = () => {
   const location = useLocation()
 
   const getRoute = useCallback(() => {
-    const user = store.getState().user.user
+    const user = store.getState().user
     setRoute(getRootRoute(user))
   }, [])
 
@@ -60,9 +60,9 @@ const Header: React.FC = () => {
   }, [])
 
   useEffect(() => {
-    setUser(store.getState().user.user)
+    setUser(store.getState().user)
     store.subscribe(() => {
-      setUser(store.getState().user.user)
+      setUser(store.getState().user)
     })
   }, [])
 

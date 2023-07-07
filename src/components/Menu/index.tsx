@@ -20,7 +20,7 @@ const SiderMenu: React.FC = () => {
   const navigate = useNavigate()
 
   const getRoute = useCallback(() => {
-    const user = store.getState().user.user
+    const user = store.getState().user
     setRoute(getRootRoute(user))
   }, [])
 
