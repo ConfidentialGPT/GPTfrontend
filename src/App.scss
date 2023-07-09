@@ -2,10 +2,10 @@
 @import 'styles/mixin.scss';
 
 .App {
-  color: $primary-color;
+  // color: $primary-color;
   width: 100vw;
   height: 100vh;
-  @include ellipse;
+  // @include ellipse;
 }
 
 #nprogress .bar {

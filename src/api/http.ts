@@ -1,7 +1,7 @@
-import axios, { AxiosInstance, AxiosResponse, AxiosError } from 'axios'
+import axios, { AxiosInstance, AxiosResponse, AxiosError, AxiosRequestConfig } from 'axios'
 
 const axiosInstance: AxiosInstance = axios.create({
-  baseURL: '/api', // 可以根据需要替换为其他 URL
+  baseURL: '/', // 可以根据需要替换为其他 URL
   headers: {
     'Content-Type': 'application/json'
   }
@@ -30,7 +30,7 @@ axiosInstance.interceptors.response.use(
 
     //   return Promise.reject(response.data)
     // }
-    return response.data
+    return response
   },
   (error: AxiosError<any>) => {
     // 处理错误信息
@@ -63,8 +63,8 @@ export default {
   },
 
   // POST 请求
-  async post<T>(url: string, data?: any): Promise<T> {
-    const response: AxiosResponse<T> = await axiosInstance.post(url, data)
+  async post<T>(url: string, data?: any, config?: AxiosRequestConfig): Promise<T> {
+    const response: AxiosResponse<T> = await axiosInstance.post(url, data, config)
     return response as any
   },
 
