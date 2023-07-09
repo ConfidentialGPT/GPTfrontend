@@ -6,14 +6,14 @@ const ChatItem = (props: { msg: MsgProps }) => {
 
   return (
     <div className="chat-content-item">
-      <div
+      <pre
         className={
           'chat-content-item-box chat-content-item-box-' +
           msg.role +
           (msg.loading ? ' chat-content-item-loading' : '')
         }>
         {msg.content}
-      </div>
+      </pre>
       {msg.loading && <LoadingOutlined rev={undefined} />}
     </div>
   )
