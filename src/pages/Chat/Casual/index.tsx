@@ -16,28 +16,86 @@ const CasualChat = () => {
     const msgList = [...list, msg]
     setList(msgList)
 
-    chatApi.chat(input).then(async (res) => {
+    const sse = chatApi.chat(input)
+
+    if (!sse) return
+
+    let curMsg: MsgProps | null = null
+
+    sse.addEventListener('message', (evt: { stopPropagation: () => void; data: string }) => {
+      evt.stopPropagation()
+
       delete msg.loading
 
-      const reader = res.body?.getReader()
-      let curMsg: MsgProps | null = null
-      while (true && reader) {
-        const { done, value } = await reader.read()
-        if (done) {
-          return
-        }
+      console.log(evt.data)
 
-        const data = parseStreamData(value)
-        if (!curMsg) {
-          curMsg = data
-          setList((list) => [...list, curMsg as MsgProps])
-        } else {
-          curMsg.content += data?.content
-          setList((list) => [...list])
-        }
-        console.log(data)
+      const data = parseStreamData(evt.data)
+      if (!curMsg) {
+        curMsg = data
+        setList((list) => [...list, curMsg as MsgProps])
+      } else {
+        // eslint-disable-next-line @typescript-eslint/no-extra-semi
+        ;(curMsg as MsgProps).content += data?.content
+        setList((list) => [...list])
       }
+
+      // console.log("got: ", evt.data);
+      // let isChatRespDone = false;
+      // if (evt.data == "[DONE]") {
+      //     isChatRespDone = true
+      // }
+
+      // if (!isChatRespDone) {
+      //     const payload = JSON.parse(evt.data)
+      //     const respContent = parseChatResp(chatmodel, payload);
+
+      //     if (payload.choices[0].finish_reason) {
+      //         isChatRespDone = true;
+      //     }
+
+      //     switch (currentAIRespEle.dataset.status) {
+      //         case "waiting":
+      //             currentAIRespEle.dataset.status = "writing";
+
+      //             if (respContent) {
+      //                 currentAIRespEle.innerHTML = respContent;
+      //                 rawHTMLResp += respContent;
+      //             } else {
+      //                 currentAIRespEle.innerHTML = "";
+      //             }
+
+      //             break
+      //         case "writing":
+      //             if (respContent) {
+      //                 rawHTMLResp += respContent;
+      //                 currentAIRespEle.innerHTML = window.Markdown2HTML(rawHTMLResp);
+      //             }
+
+      //             scrollChatToDown();
+      //             break
+      //     }
+      // }
+
+      // if (isChatRespDone) {
+      //     sse.close();
+      //     sse = null;
+
+      //     let markdownConverter = new window.showdown.Converter();
+      //     currentAIRespEle.innerHTML = window.Markdown2HTML(rawHTMLResp);
+
+      //     Prism.highlightAll();
+      //     window.EnableTooltipsEverywhere();
+
+      //     scrollChatToDown();
+      //     appendChats2Storage(RoleAI, currentAIRespEle.innerHTML, chatID);
+      //     unlockChatInput();
+      // }
     })
+
+    sse.addEventListener('error', (err: any) => {
+      console.error(err)
+    })
+    sse.stream()
 
     setInput('')
   }, [input, list])
