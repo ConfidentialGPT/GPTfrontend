@@ -90,6 +90,7 @@ class SSE {
     this.close()
   }
   _onStreamProgress(e: any) {
+    console.log('process:', Date.now())
     if (!this.xhr) {
       return
     }

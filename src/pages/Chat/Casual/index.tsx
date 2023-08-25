@@ -2,14 +2,28 @@ import { Button, Input, Layout } from 'antd'
 
 import './index.scss'
 import { RobotOutlined, ArrowRightOutlined } from '@ant-design/icons'
-import { useCallback, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import chatApi from 'api/chat'
 import { MsgProps, Role, newChatID, parseStreamData } from './utils'
 import ChatItem from './ChatItem'
 
+const STORAGE_KEY = 'chat-context'
+
 const CasualChat = () => {
   const [input, setInput] = useState<string>('')
   const [list, setList] = useState<MsgProps[]>([])
+
+  useEffect(() => {
+    try {
+      setList(JSON.parse(localStorage.getItem(STORAGE_KEY) || ''))
+    } catch (e) {
+      setList([])
+    }
+  }, [])
+
+  useEffect(() => {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(list))
+  }, [list])
 
   const doPost = useCallback(() => {
     const msg: MsgProps = { role: Role.user, chatID: newChatID(), content: input, loading: true }
@@ -27,7 +41,7 @@ const CasualChat = () => {
 
       delete msg.loading
 
-      console.log(evt.data)
+      console.log(Date.now(), evt.data)
 
       const data = parseStreamData(evt.data)
       if (!curMsg) {
