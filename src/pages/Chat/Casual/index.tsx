@@ -6,12 +6,14 @@ import { useCallback, useEffect, useState } from 'react'
 import chatApi from 'api/chat'
 import { MsgProps, Role, newChatID, parseStreamData } from './utils'
 import ChatItem from './ChatItem'
+import ConfigForm, { ConfigProps, DefaultConfig } from 'components/ChatConfig'
 
 const STORAGE_KEY = 'chat-context'
 
 const CasualChat = () => {
   const [input, setInput] = useState<string>('')
   const [list, setList] = useState<MsgProps[]>([])
+  const [config, setConfig] = useState<ConfigProps>(DefaultConfig)
 
   useEffect(() => {
     try {
@@ -52,58 +54,6 @@ const CasualChat = () => {
         ;(curMsg as MsgProps).content += data?.content
         setList((list) => [...list])
       }
-
-      // console.log("got: ", evt.data);
-      // let isChatRespDone = false;
-      // if (evt.data == "[DONE]") {
-      //     isChatRespDone = true
-      // }
-
-      // if (!isChatRespDone) {
-      //     const payload = JSON.parse(evt.data)
-      //     const respContent = parseChatResp(chatmodel, payload);
-
-      //     if (payload.choices[0].finish_reason) {
-      //         isChatRespDone = true;
-      //     }
-
-      //     switch (currentAIRespEle.dataset.status) {
-      //         case "waiting":
-      //             currentAIRespEle.dataset.status = "writing";
-
-      //             if (respContent) {
-      //                 currentAIRespEle.innerHTML = respContent;
-      //                 rawHTMLResp += respContent;
-      //             } else {
-      //                 currentAIRespEle.innerHTML = "";
-      //             }
-
-      //             break
-      //         case "writing":
-      //             if (respContent) {
-      //                 rawHTMLResp += respContent;
-      //                 currentAIRespEle.innerHTML = window.Markdown2HTML(rawHTMLResp);
-      //             }
-
-      //             scrollChatToDown();
-      //             break
-      //     }
-      // }
-
-      // if (isChatRespDone) {
-      //     sse.close();
-      //     sse = null;
-
-      //     let markdownConverter = new window.showdown.Converter();
-      //     currentAIRespEle.innerHTML = window.Markdown2HTML(rawHTMLResp);
-
-      //     Prism.highlightAll();
-      //     window.EnableTooltipsEverywhere();
-
-      //     scrollChatToDown();
-      //     appendChats2Storage(RoleAI, currentAIRespEle.innerHTML, chatID);
-      //     unlockChatInput();
-      // }
     })
 
     sse.addEventListener('error', (err: any) => {
@@ -118,6 +68,7 @@ const CasualChat = () => {
     <Layout className="chat-page">
       <Layout.Header className="chat-header">
         <RobotOutlined rev={undefined} /> Casual Chat with GPT-3.5
+        <ConfigForm config={config} onChange={setConfig} />
       </Layout.Header>
       <Layout.Content className="chat-content">
         <div className="chat-scroll-zone">
