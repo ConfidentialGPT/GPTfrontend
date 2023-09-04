@@ -32,7 +32,28 @@ const CasualChat = () => {
     const msgList = [...list, msg]
     setList(msgList)
 
-    const sse = chatApi.chat(input)
+    const sse = chatApi.chat({
+      max_tokens: config.max_tokens,
+      temperature: config.temperature,
+      presence_penalty: config.presence_penalty,
+      frequency_penalty: config.frequency_penalty,
+      messages: [
+        {
+          role: Role.system,
+          content: config.system_prompt
+        },
+        ...msgList
+          .filter((msg) => msg.role === Role.user)
+          .reverse()
+          .slice(0, config.contexts + 1)
+          .reverse()
+          .map((msg) => {
+            const _msg = { ...msg }
+            delete _msg.loading
+            return _msg
+          })
+      ]
+    })
 
     if (!sse) return
 
@@ -62,13 +83,18 @@ const CasualChat = () => {
     sse.stream()
 
     setInput('')
-  }, [input, list])
+  }, [input, list, config])
 
   return (
     <Layout className="chat-page">
       <Layout.Header className="chat-header">
         <RobotOutlined rev={undefined} /> Casual Chat with GPT-3.5
-        <ConfigForm config={config} onChange={setConfig} />
+        <ConfigForm
+          config={config}
+          onChange={(config) => {
+            setConfig(config)
+          }}
+        />
       </Layout.Header>
       <Layout.Content className="chat-content">
         <div className="chat-scroll-zone">

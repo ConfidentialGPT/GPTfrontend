@@ -1,6 +1,6 @@
 import { SettingOutlined } from '@ant-design/icons'
 import { Button, Form, Input, Modal } from 'antd'
-import { useEffect, useMemo, useState } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 import SliderInput from './SliderInput'
 import PromptEditor from './PromptEdtior'
 
@@ -50,6 +50,15 @@ const ConfigForm = (props: ConfigFormProps) => {
     form.setFieldsValue({ ...DefaultConfig, ...config })
   }, [config])
 
+  const onClose = useCallback(() => {
+    if (onChange) {
+      const values = form.getFieldsValue()
+      onChange(values)
+    }
+
+    setOpen(false)
+  }, [form, onChange])
+
   return (
     <>
       <Button
@@ -61,13 +70,9 @@ const ConfigForm = (props: ConfigFormProps) => {
         open={open}
         cancelButtonProps={{ style: { display: 'none' } }}
         okButtonProps={{ style: { display: 'none' } }}
-        onCancel={() => setOpen(false)}
+        onCancel={onClose}
         maskClosable>
         <Form
-          onChange={() => {
-            if (!onChange) return
-            onChange(form.getFieldsValue())
-          }}
           form={form}
           layout="horizontal"
           labelCol={{ span: 7 }}
