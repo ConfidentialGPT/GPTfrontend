@@ -2,18 +2,27 @@ import { Button, Input, Layout } from 'antd'
 
 import './index.scss'
 import { RobotOutlined, ArrowRightOutlined } from '@ant-design/icons'
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react'
 import chatApi from 'api/chat'
 import { MsgProps, Role, newChatID, parseStreamData } from './utils'
 import ChatItem from './ChatItem'
 import ConfigForm, { ConfigProps, DefaultConfig } from 'components/ChatConfig'
+import { throttle } from 'lodash'
 
 const STORAGE_KEY = 'chat-context'
+
+const scrollToLastOne = (ref: React.RefObject<HTMLDivElement>) => {
+  if (ref.current) {
+    ref.current.lastElementChild?.scrollIntoView({ behavior: 'smooth' })
+  }
+}
 
 const CasualChat = () => {
   const [input, setInput] = useState<string>('')
   const [list, setList] = useState<MsgProps[]>([])
   const [config, setConfig] = useState<ConfigProps>(DefaultConfig)
+
+  const contentRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     try {
@@ -23,67 +32,77 @@ const CasualChat = () => {
     }
   }, [])
 
+  useLayoutEffect(() => {
+    setTimeout(() => scrollToLastOne(contentRef))
+  }, [contentRef, list])
+
   useEffect(() => {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(list))
   }, [list])
 
-  const doPost = useCallback(() => {
-    const msg: MsgProps = { role: Role.user, chatID: newChatID(), content: input, loading: true }
-    const msgList = [...list, msg]
-    setList(msgList)
+  const doPost = useCallback(
+    (input: string) => {
+      const msg: MsgProps = { role: Role.user, chatID: newChatID(), content: input, loading: true }
+      const msgList = [...list, msg]
+      setList(msgList)
+      scrollToLastOne(contentRef)
 
-    const sse = chatApi.chat({
-      max_tokens: config.max_tokens,
-      temperature: config.temperature,
-      presence_penalty: config.presence_penalty,
-      frequency_penalty: config.frequency_penalty,
-      messages: [
-        {
-          role: Role.system,
-          content: config.system_prompt
-        },
-        ...msgList
-          .filter((msg) => msg.role === Role.user)
-          .reverse()
-          .slice(0, config.contexts + 1)
-          .reverse()
-          .map((msg) => {
-            const _msg = { ...msg }
-            delete _msg.loading
-            return _msg
-          })
-      ]
-    })
+      const sse = chatApi.chat({
+        max_tokens: config.max_tokens,
+        temperature: config.temperature,
+        presence_penalty: config.presence_penalty,
+        frequency_penalty: config.frequency_penalty,
+        messages: [
+          {
+            role: Role.system,
+            content: config.system_prompt
+          },
+          ...msgList
+            .filter((msg) => msg.role === Role.user)
+            .reverse()
+            .slice(0, config.contexts + 1)
+            .reverse()
+            .map((msg) => {
+              const _msg = { ...msg }
+              delete _msg.loading
+              return _msg
+            })
+        ]
+      })
 
-    if (!sse) return
+      if (!sse) return
 
-    let curMsg: MsgProps | null = null
+      let curMsg: MsgProps | null = null
 
-    sse.addEventListener('message', (evt: { stopPropagation: () => void; data: string }) => {
-      evt.stopPropagation()
+      sse.addEventListener('message', (evt: { stopPropagation: () => void; data: string }) => {
+        evt.stopPropagation()
 
-      delete msg.loading
+        delete msg.loading
 
-      console.log(Date.now(), evt.data)
+        console.log(Date.now(), evt.data)
 
-      const data = parseStreamData(evt.data)
-      if (!curMsg) {
-        curMsg = data
-        setList((list) => [...list, curMsg as MsgProps])
-      } else {
-        // eslint-disable-next-line @typescript-eslint/no-extra-semi
-        ;(curMsg as MsgProps).content += data?.content
-        setList((list) => [...list])
-      }
-    })
+        const data = parseStreamData(evt.data)
+        if (!curMsg) {
+          curMsg = data
+          setList((list) => [...list, curMsg as MsgProps])
+        } else {
+          // eslint-disable-next-line @typescript-eslint/no-extra-semi
+          ;(curMsg as MsgProps).content += data?.content
+          setList((list) => [...list])
+        }
 
-    sse.addEventListener('error', (err: any) => {
-      console.error(err)
-    })
-    sse.stream()
+        scrollToLastOne(contentRef)
+      })
 
-    setInput('')
-  }, [input, list, config])
+      sse.addEventListener('error', (err: any) => {
+        console.error(err)
+      })
+      sse.stream()
+
+      setInput('')
+    },
+    [list, config, contentRef]
+  )
 
   return (
     <Layout className="chat-page">
@@ -97,7 +116,7 @@ const CasualChat = () => {
         />
       </Layout.Header>
       <Layout.Content className="chat-content">
-        <div className="chat-scroll-zone">
+        <div className="chat-scroll-zone" ref={contentRef}>
           {list.map((msg) => (
             <ChatItem msg={msg} key={msg.chatID} />
           ))}
@@ -109,11 +128,11 @@ const CasualChat = () => {
             className="chat-input"
             value={input}
             onChange={(e) => setInput(e.target.value)}
-            onPressEnter={doPost}
+            onPressEnter={() => doPost(input)}
             suffix={
               <Button
                 className="chat-input-btn"
-                onClick={doPost}
+                onClick={() => doPost(input)}
                 disabled={!input}
                 icon={<ArrowRightOutlined rev={undefined} />}></Button>
             }></Input>
