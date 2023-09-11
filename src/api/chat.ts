@@ -13,8 +13,8 @@ interface ChatParams {
 }
 
 export default {
-  chat: (params: ChatParams, token = 'chenhao-34e890126d9c06d26ba34d12c102097b') => {
-    return new SSE('/api/', {
+  chat: (params: ChatParams, api = '/api/', token = 'chenhao-34e890126d9c06d26ba34d12c102097b') => {
+    return new SSE(api, {
       headers: {
         'Content-Type': 'application/json',
         Authorization: 'Bearer ' + token,
